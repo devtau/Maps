@@ -22,5 +22,5 @@
     -->
     <string name="google_maps_key"
         templateMergeStrategy="preserve"
-        translatable="false">AIzaSyAianXPlehQvYVcYJihJmMPzYOM2nV4E0w</string>
+        translatable="false">YOUR_APP_KEY_HERE</string>
 </resources>
