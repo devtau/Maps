@@ -15,7 +15,7 @@ public interface MapHelper extends
     void handleGeoData();
     void goToLocation(LatLng location);
     void goToMyLocation();
-    void goToTenerife();
+    void goToDestination();
     void subscribeToLocationChange();
     void unsubscribeFromLocationChange();
 }

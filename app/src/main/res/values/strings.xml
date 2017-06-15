@@ -2,10 +2,13 @@
     <string name="app_name">Maps</string>
     <string name="title_activity_maps">Map</string>
     <string name="show_me">Show me</string>
-    <string name="recenter_map">Recenter map</string>
+    <string name="show_destination">Show destination</string>
     <string name="geo_data_unavailable">Geo data unavailable</string>
 
     <string name="permission_cancelled_msg_gps">Geo-location has been disabled for this app. We can\'t show your position on the map.</string>
     <string name="permission_explanation_gps">Application requires access to your location in order to show you on map and help you navigate around event\'s area.</string>
     <string name="permission_needed">Permission needed</string>
+    <string name="api_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyDZKTs8N8j0OUR8yGdq4oTM0ddZJKx6OrE
+    </string>
 </resources>

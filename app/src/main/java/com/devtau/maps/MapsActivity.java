@@ -32,7 +32,8 @@ public class MapsActivity extends FragmentActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PermissionHelperImpl.GPS_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == PermissionHelperImpl.GPS_REQUEST_CODE && grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             mapHelper.handleGeoData();
         }
     }
@@ -58,7 +59,7 @@ public class MapsActivity extends FragmentActivity {
         });
 
         View buttonResetLocation = findViewById(R.id.buttonResetLocation);
-        buttonResetLocation.setOnClickListener(v -> mapHelper.goToTenerife());
+        buttonResetLocation.setOnClickListener(v -> mapHelper.goToDestination());
         buttonResetLocation.setOnLongClickListener(v -> {
             showHintAboveView(v);
             return false;

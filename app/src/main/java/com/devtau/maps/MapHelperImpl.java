@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -28,29 +29,37 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapHelperImpl implements MapHelper {
 
     private static final String LOG_TAG = "MapHelperImpl";
-    private static final int ZOOM = 12;
+    private static final int ZOOM = 14;//0 - максимально высоко, 5 - страна, 10 - город, 15 - квартал, 18 - дом, 21 - максимально близко
+    private static final int MIN_ZOOM = 6;
     private Activity mActivity;
     private GoogleMap mMap;
     private LatLng mCurrentLocation;
-    private LatLng mTenerife;
+    private LatLng mDestination;
+    private String mDestinationTitle;
     private Marker mCurrLocationMarker;
     private GoogleApiClient mGoogleApiClient;
     private boolean mConfigurationChanged;
-
+    
     public MapHelperImpl(boolean configurationChanged, Activity activity) {
+        this(new LatLng(28.460362, -16.250817), "Marker in Tenerife", configurationChanged, activity);
+    }
+    
+    public MapHelperImpl(@NonNull LatLng destination, @NonNull String destinationTitle, boolean configurationChanged, Activity activity) {
+        mDestination = destination;
+        mDestinationTitle = destinationTitle;
         mActivity = activity;
         mConfigurationChanged = configurationChanged;
         mGoogleApiClient = buildGoogleApiClient(activity);
     }
-
+    
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mTenerife = new LatLng(28.45, -16.3);
-        mMap.addMarker(new MarkerOptions().position(mTenerife).title("Marker in Tenerife"));
-        addPlaceToMap(28.25, -16.4, ContextCompat.getColor(mActivity, R.color.colorAccent));
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.addMarker(new MarkerOptions().position(mDestination).title(mDestinationTitle));
+//        addPlaceToMap(new LatLng(28.25, -16.4), ContextCompat.getColor(mActivity, R.color.colorAccent), "Some place");
         if (!mConfigurationChanged) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mTenerife, ZOOM));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDestination, ZOOM));
         }
     }
 
@@ -80,12 +89,14 @@ public class MapHelperImpl implements MapHelper {
     @Override
     public void goToLocation(LatLng location) {
         if (location != null) {
+            float currentZoom = mMap.getCameraPosition().zoom;
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(location)
-                    .zoom(ZOOM)//приближение камеры. 0 - максимально высоко, 5 - страна, 10 - город, 15 - квартал, 18 - дом
+                    .zoom(currentZoom < MIN_ZOOM ? ZOOM : currentZoom)
                     .bearing(0)//азимут. 0 - север, 90 - восток, 180 - юг, 270 - запад
                     .tilt(0)//0-90 условный угол наклона камеры к плоскости карты, где 0 - это взгляд перпендикулярно вниз, а 90 - около 45 градусов к плоскости
                     .build();
+            Log.d("куку", "currentZoom=" + currentZoom);
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         } else {
             String gpsUnavailableMsg;
@@ -105,8 +116,9 @@ public class MapHelperImpl implements MapHelper {
     }
 
     @Override
-    public void goToTenerife() {
-        goToLocation(mTenerife);
+    public void goToDestination() {
+        goToLocation(mDestination);
+        showDistanceToTargetToast();
     }
 
     @Override
@@ -150,17 +162,16 @@ public class MapHelperImpl implements MapHelper {
 //                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
         mCurrLocationMarker = mMap.addMarker(markerOptions);
     }
-
-    private void addPlaceToMap(double lat, double lon, int color) {
+    
+    private void addPlaceToMap(LatLng location, int color, String title) {
         Bitmap place = getMarkerIconFromDrawable(ContextCompat.getDrawable(mActivity, R.drawable.map_pin), color);
         BitmapDescriptor placeDescriptor = BitmapDescriptorFactory.fromBitmap(place);
-        LatLng position = new LatLng(lat, lon);
         MarkerOptions markerOptions = new MarkerOptions()
-                .position(position)
-                .title("Some place")
+                .position(location)
+                .title(title)
                 .icon(placeDescriptor);
         Marker marker = mMap.addMarker(markerOptions);
-        marker.setTag("Some place");//здесь можно добавить к маркеру объект
+        marker.setTag(title);//здесь можно добавить к маркеру объект
     }
 
     private Bitmap getMarkerIconFromDrawable(Drawable drawable, int color) {
@@ -171,5 +182,13 @@ public class MapHelperImpl implements MapHelper {
         drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         drawable.draw(canvas);
         return bitmap;
+    }
+    
+    private void showDistanceToTargetToast() {
+        float[] results = new float[1];
+        Location.distanceBetween(mCurrentLocation.latitude, mCurrentLocation.longitude,
+                mDestination.latitude, mDestination.longitude, results);
+        String msg = "you are " + Math.round(results[0]/1000) + "km " + (int) results[0]%1000 + "m away";
+        Toast.makeText(mActivity, msg, Toast.LENGTH_LONG).show();
     }
 }

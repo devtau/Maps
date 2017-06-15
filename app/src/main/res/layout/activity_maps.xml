@@ -33,6 +33,6 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_margin="10dp"
-            android:contentDescription="@string/recenter_map"/>
+            android:contentDescription="@string/show_destination"/>
     </LinearLayout>
 </FrameLayout>
