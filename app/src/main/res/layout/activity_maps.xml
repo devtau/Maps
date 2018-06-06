@@ -1,38 +1,24 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.devtau.maps.MapsActivity" >
+    android:orientation="vertical"
+    tools:context="com.devtau.mapsExample.MapsActivity">
 
-    <fragment
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary">
+
+        <com.devtau.mapsExample.FontTextView
+            android:text="@string/app_name"
+            style="@style/TextRegular"
+            android:textColor="@color/colorWhite"/>
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:background="@android:color/transparent">
-
-        <ImageView
-            android:id="@+id/buttonMyLocation"
-            android:src="@drawable/button_my_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/show_me"/>
-
-        <ImageView
-            android:id="@+id/buttonResetLocation"
-            android:src="@drawable/button_reset_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_margin="10dp"
-            android:contentDescription="@string/show_destination"/>
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>

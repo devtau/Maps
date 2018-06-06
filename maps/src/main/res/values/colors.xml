@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorGray">#757575</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorRed">#d60f03</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorGray62">#7d3e3e3e</color>
+    <color name="colorGray137">#898989</color>
+    <color name="colorGray224">#e0e0e0</color>
+    <color name="colorGray234">#eaeaea</color>  основной фон
+</resources>

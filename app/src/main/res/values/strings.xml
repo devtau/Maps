@@ -1,14 +1,34 @@
 <resources>
     <string name="app_name">Maps</string>
     <string name="title_activity_maps">Map</string>
-    <string name="show_me">Show me</string>
-    <string name="show_destination">Show destination</string>
-    <string name="geo_data_unavailable">Geo data unavailable</string>
+    <string name="from">с</string>
+    <string name="to">до</string>
+    <string name="take_away_from_here">Заберу отсюда</string>
 
-    <string name="permission_cancelled_msg_gps">Geo-location has been disabled for this app. We can\'t show your position on the map.</string>
-    <string name="permission_explanation_gps">Application requires access to your location in order to show you on map and help you navigate around event\'s area.</string>
-    <string name="permission_needed">Permission needed</string>
+    <!-- шрифты -->
+    <string name="light">pfdindisplaypro-light.ttf</string>
+    <string name="medium">pfdindisplaypro-med.ttf</string>
+    <string name="regular">pfdindisplaypro-reg.ttf</string>
+
+
+    <!--
+    TODO: Before you release your application, you need a Google Maps API key.
+
+    To do this, you can either add your release key credentials to your existing
+    key, or create a new key.
+
+    Note that this file specifies the API key for the release build target.
+    If you have previously set up a key for the debug target with the debug signing certificate,
+    you will also need to set up a key for your release certificate.
+
+    Follow the directions here:
+
+    https://developers.google.com/maps/documentation/android/signup
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
     <string name="api_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDZKTs8N8j0OUR8yGdq4oTM0ddZJKx6OrE
+        AIzaSyCwdFWfuQlxQPOjj6Hl039PYA5nsVrL64s
     </string>
 </resources>
